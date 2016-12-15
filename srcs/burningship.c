@@ -1,40 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractale.c                                         :+:      :+:    :+:   */
+/*   burningship.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tglandai <tglandai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/11 13:42:53 by tglandai          #+#    #+#             */
-/*   Updated: 2016/12/15 11:38:02 by tglandai         ###   ########.fr       */
+/*   Created: 2016/12/14 12:45:50 by tglandai          #+#    #+#             */
+/*   Updated: 2016/12/15 11:38:23 by tglandai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	mandelbrot_init(t_fractol *data)
+void	burningship_init(t_fractol *data)
 {
 	data->it_max = 50;
-	data->zoom = 300;
-	data->x1 = -2.05;
-	data->y1 = -1.3;
+	data->zoom = 220;
+	data->x1 = -2.2;
+	data->y1 = -2.5;
 	data->color = 265;
 }
 
-void	mandelbrot_calc(t_fractol *data)
+void	burningship_calc(t_fractol *data)
 {
 	data->c_r = data->x / data->zoom + data->x1;
 	data->c_i = data->y / data->zoom + data->y1;
 	data->z_r = 0;
 	data->z_i = 0;
 	data->it = 0;
-	while (data->z_r * data->z_r + data->z_i *
-			data->z_i < 4 && data->it < data->it_max)
+	while (data->z_r * data->z_r + data->z_i * data->z_i < 4
+			&& data->it < data->it_max)
 	{
-		data->tmp = data->z_r;
-		data->z_r = data->z_r * data->z_r -
-			data->z_i * data->z_i + data->c_r;
-		data->z_i = 2 * data->z_i * data->tmp + data->c_i;
+		data->tmp = data->z_r * data->z_r - data->z_i * data->z_i + data->c_r;
+		data->z_i = fabs(2 * data->z_r * data->z_i) + data->c_i;
+		data->z_r = data->tmp;
 		data->it++;
 	}
 	if (data->it == data->it_max)
@@ -43,10 +42,10 @@ void	mandelbrot_calc(t_fractol *data)
 		put_pxl_to_img(data, data->x, data->y, (data->color * data->it));
 }
 
-void	*mandelbrot(void *tab)
+void	*burningship(void *tab)
 {
-	t_fractol	*data;
 	double		tmp;
+	t_fractol	*data;
 
 	data = (t_fractol *)tab;
 	data->x = 0;
@@ -56,7 +55,7 @@ void	*mandelbrot(void *tab)
 		data->y = tmp;
 		while (data->y < data->y_max)
 		{
-			mandelbrot_calc(data);
+			burningship_calc(data);
 			data->y++;
 		}
 		data->x++;
@@ -64,7 +63,7 @@ void	*mandelbrot(void *tab)
 	return (tab);
 }
 
-void	mandelbrot_pthread(t_fractol *data)
+void	burningship_pthread(t_fractol *data)
 {
 	t_fractol	tab[8];
 	pthread_t	t[8];
@@ -80,7 +79,7 @@ void	mandelbrot_pthread(t_fractol *data)
 	}
 	i = 0;
 	while (++i <= 8)
-		pthread_create(&t[i - 1], NULL, mandelbrot, &tab[i - 1]);
+		pthread_create(&t[i - 1], NULL, burningship, &tab[i - 1]);
 	while (i--)
 		pthread_join(t[i], NULL);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);

@@ -6,22 +6,26 @@
 /*   By: tglandai <tglandai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 20:00:26 by tglandai          #+#    #+#             */
-/*   Updated: 2016/12/12 18:20:35 by tglandai         ###   ########.fr       */
+/*   Updated: 2016/12/13 19:06:16 by tglandai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	put_text(t_fractol *data)
+int		key_hook2(int keycode, t_fractol *data)
 {
-	char	*text;
-	char	*nb;
-
-	nb = ft_itoa(data->it_max);
-	text = ft_strjoin("iterations : ", nb);
-	mlx_string_put(data->mlx, data->win, 10, 10, 0xFFFFFF, text);
-	ft_strdel(&text);
-	ft_strdel(&nb);
+	if (keycode == 19)
+		data->color = 2050;
+	else if (keycode == 20)
+		data->color = 265;
+	else if (keycode == 35)
+	{
+		if (data->julia_mouse == 1)
+			data->julia_mouse = 0;
+		else
+			data->julia_mouse = 1;
+	}
+	return (0);
 }
 
 int		key_hook(int keycode, t_fractol *data)
@@ -43,37 +47,40 @@ int		key_hook(int keycode, t_fractol *data)
 	else if (keycode == 49)
 		fract_init(data);
 	else if (keycode == 18)
-		data->color = 256;
-	else if (keycode == 19)
-		data->color = 300000;
-	else if (keycode == 20)
-		data->color = 1;
+		data->color = 1677216;
+	key_hook2(keycode, data);
 	fract_calc(data);
 	return (0);
 }
 
-int		mouse_julia(int x, int y, t_fractol *data)
+void	ft_zoom(int x, int y, t_fractol *data)
 {
-	if (data->fract == 1)
-	{
-		data->c_r = x * 2;
-		data->c_i = y * 2 - 800;
-		fract_calc(data);
-	}
-	return (0);
+	data->x2 = x;
+	data->y2 = y;
+	data->x1 = (x / data->zoom + data->x1) - ((data->zoom * 1.3) / 2);
+	data->x1 += ((data->zoom * 1.3) / 2) - (x / (data->zoom * 1.3));
+	data->y1 = (y / data->zoom + data->y1) - ((data->zoom * 1.3) / 2);
+	data->y1 += ((data->zoom * 1.3) / 2) - (y / (data->zoom * 1.3));
+	data->zoom *= 1.3;
+	data->it_max++;
+}
+
+void	ft_dezoom(t_fractol *data)
+{
+	data->x1 = (data->x2 / data->zoom + data->x1) - ((data->zoom / 1.3) / 2);
+	data->x1 += ((data->zoom / 1.3) / 2) - (data->x2 / (data->zoom / 1.3));
+	data->y1 = (data->y2 / data->zoom + data->y1) - ((data->zoom / 1.3) / 2);
+	data->y1 += ((data->zoom / 1.3) / 2) - (data->y2 / (data->zoom / 1.3));
+	data->zoom /= 1.3;
+	data->it_max--;
 }
 
 int		mouse_hook(int mousecode, int x, int y, t_fractol *data)
 {
-	if (mousecode == 5 || mousecode == 2)
-	{
-		data->zoom /= 1.5;
-	}
-	else if (mousecode == 4 || mousecode == 1)
-	{
-		data->zoom *= 1.5;
-	}
-	x = y;
+	if (mousecode == 4 || mousecode == 1)
+		ft_zoom(x, y, data);
+	else if (mousecode == 5 || mousecode == 2)
+		ft_dezoom(data);
 	fract_calc(data);
 	return (0);
 }

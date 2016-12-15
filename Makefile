@@ -6,14 +6,14 @@
 #    By: tglandai <tglandai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/04 12:18:57 by tglandai          #+#    #+#              #
-#    Updated: 2016/12/12 18:51:56 by tglandai         ###   ########.fr        #
+#    Updated: 2016/12/14 12:45:30 by tglandai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fractol
 
 SRC_PATH = srcs
-SRC_NAME = main.c hook.c mandelbrot.c julia.c sierpinski.c
+SRC_NAME = main.c hook.c mandelbrot.c julia.c tools.c burningship.c
 
 OBJ_PATH = objs
 OBJ_NAME = $(SRC_NAME:.c=.o)
