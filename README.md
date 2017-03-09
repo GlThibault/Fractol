@@ -21,3 +21,17 @@ $> ./fractol mandelbrot
 $> ./fractol julia
 $> ./fractol burningship
 ```
+
+##Pictures
+###Mandelbrot
+
+![alt tag](https://raw.githubusercontent.com/GlThibault/pics/master/fractol_mandelbrot.png)
+![alt tag](https://raw.githubusercontent.com/GlThibault/pics/master/fractol_mandelbrot2.png)
+
+###Julia
+![alt tag](https://raw.githubusercontent.com/GlThibault/pics/master/fractol_julia.png)
+![alt tag](https://raw.githubusercontent.com/GlThibault/pics/master/fractol_julia2.png)
+
+###BurningShip
+![alt tag](https://raw.githubusercontent.com/GlThibault/pics/master/fractol_burningship.png)
+![alt tag](https://raw.githubusercontent.com/GlThibault/pics/master/fractol_burningship2.png)
