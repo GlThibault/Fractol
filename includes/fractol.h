@@ -6,7 +6,7 @@
 /*   By: tglandai <tglandai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 15:58:46 by tglandai          #+#    #+#             */
-/*   Updated: 2016/12/14 16:00:12 by tglandai         ###   ########.fr       */
+/*   Updated: 2018/10/06 10:50:01 by tglandai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,12 @@ typedef struct	s_fractol
 	double		z_i;
 	double		it;
 	double		tmp;
-	double		x2;
-	double		y2;
 }				t_fractol;
 
 int				key_hook(int keycode, t_fractol *data);
 int				key_hook2(int keycode, t_fractol *data);
 void			ft_zoom(int x, int y, t_fractol *data);
-void			ft_dezoom(t_fractol *data);
+void			ft_dezoom(int x, int y, t_fractol *data);
 int				mouse_hook(int mousecode, int x, int y, t_fractol *data);
 
 void			mandelbrot_init(t_fractol *data);

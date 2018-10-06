@@ -6,7 +6,7 @@
 /*   By: tglandai <tglandai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 20:00:26 by tglandai          #+#    #+#             */
-/*   Updated: 2016/12/13 19:06:16 by tglandai         ###   ########.fr       */
+/*   Updated: 2018/10/06 10:44:32 by tglandai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,16 @@ int		key_hook(int keycode, t_fractol *data)
 
 void	ft_zoom(int x, int y, t_fractol *data)
 {
-	data->x2 = x;
-	data->y2 = y;
-	data->x1 = (x / data->zoom + data->x1) - ((data->zoom * 1.3) / 2);
-	data->x1 += ((data->zoom * 1.3) / 2) - (x / (data->zoom * 1.3));
-	data->y1 = (y / data->zoom + data->y1) - ((data->zoom * 1.3) / 2);
-	data->y1 += ((data->zoom * 1.3) / 2) - (y / (data->zoom * 1.3));
+	data->x1 = (x / data->zoom + data->x1) - (x / (data->zoom * 1.3));
+	data->y1 = (y / data->zoom + data->y1) - (y / (data->zoom * 1.3));
 	data->zoom *= 1.3;
 	data->it_max++;
 }
 
-void	ft_dezoom(t_fractol *data)
+void	ft_dezoom(int x, int y, t_fractol *data)
 {
-	data->x1 = (data->x2 / data->zoom + data->x1) - ((data->zoom / 1.3) / 2);
-	data->x1 += ((data->zoom / 1.3) / 2) - (data->x2 / (data->zoom / 1.3));
-	data->y1 = (data->y2 / data->zoom + data->y1) - ((data->zoom / 1.3) / 2);
-	data->y1 += ((data->zoom / 1.3) / 2) - (data->y2 / (data->zoom / 1.3));
+	data->x1 = (x / data->zoom + data->x1)  - (x / (data->zoom / 1.3));
+	data->y1 = (y / data->zoom + data->y1) - (y / (data->zoom / 1.3));
 	data->zoom /= 1.3;
 	data->it_max--;
 }
@@ -80,7 +74,7 @@ int		mouse_hook(int mousecode, int x, int y, t_fractol *data)
 	if (mousecode == 4 || mousecode == 1)
 		ft_zoom(x, y, data);
 	else if (mousecode == 5 || mousecode == 2)
-		ft_dezoom(data);
+		ft_dezoom(x, y, data);
 	fract_calc(data);
 	return (0);
 }
