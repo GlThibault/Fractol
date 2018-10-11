@@ -6,7 +6,7 @@
 #    By: tglandai <tglandai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/04 12:18:57 by tglandai          #+#    #+#              #
-#    Updated: 2016/12/14 12:45:30 by tglandai         ###   ########.fr        #
+#    Updated: 2018/10/11 13:12:56 by tglandai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CFLAGS = -Wall -Werror -Wextra
 CPPFLAGS = -I includes -I libft/includes
 
 LDFLAGS = -L libft
-LDLIBS = -lft -lm -lmlx -framework OpenGL -framework AppKit
+LDLIBS = -O2 -lft -lm -lmlx -framework OpenGL -framework AppKit
 
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))

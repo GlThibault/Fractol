@@ -6,7 +6,7 @@
 /*   By: tglandai <tglandai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 20:11:04 by tglandai          #+#    #+#             */
-/*   Updated: 2016/12/14 15:57:54 by tglandai         ###   ########.fr       */
+/*   Updated: 2018/10/11 12:02:38 by tglandai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	julia_calc(t_fractol *data)
 
 void	*julia(void *tab)
 {
-	double		tmp;
+	int		tmp;
 	t_fractol	*data;
 
 	data = (t_fractol *)tab;
@@ -78,21 +78,19 @@ void	*julia(void *tab)
 
 void	julia_pthread(t_fractol *data)
 {
-	t_fractol	tab[8];
-	pthread_t	t[8];
+	t_fractol	tab[THREAD_NUMBER];
+	pthread_t	t[THREAD_NUMBER];
 	int			i;
 
 	i = 0;
-	while (i < 8)
+	while (i < THREAD_NUMBER)
 	{
 		ft_memcpy((void*)&tab[i], (void*)data, sizeof(t_fractol));
-		tab[i].y = 100 * i;
-		tab[i].y_max = 100 * (i + 1);
+		tab[i].y = THREAD_WIDTH * i;
+		tab[i].y_max = THREAD_WIDTH * (i + 1);
+		pthread_create(&t[i], NULL, julia, &tab[i]);
 		i++;
 	}
-	i = 0;
-	while (++i <= 8)
-		pthread_create(&t[i - 1], NULL, julia, &tab[i - 1]);
 	while (i--)
 		pthread_join(t[i], NULL);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);

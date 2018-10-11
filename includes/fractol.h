@@ -6,7 +6,7 @@
 /*   By: tglandai <tglandai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 15:58:46 by tglandai          #+#    #+#             */
-/*   Updated: 2018/10/06 10:50:01 by tglandai         ###   ########.fr       */
+/*   Updated: 2018/10/11 13:13:06 by tglandai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include "mlx.h"
 # include "math.h"
 # include "pthread.h"
-# define WIDTH 800
+# define WIDTH 600
+# define THREAD_WIDTH 5
+# define THREAD_NUMBER 120
 
 typedef struct	s_fractol
 {
@@ -32,18 +34,19 @@ typedef struct	s_fractol
 	int			fract;
 	int			color;
 	int			julia_mouse;
+	int			x;
+	int			y;
+	int			y_max;
+	int			it;
+	int			it_max;
+	int			show_text;
 	double		zoom;
-	double		it_max;
 	double		x1;
 	double		y1;
-	double		x;
-	double		y;
-	double		y_max;
 	double		c_r;
 	double		c_i;
 	double		z_r;
 	double		z_i;
-	double		it;
 	double		tmp;
 }				t_fractol;
 

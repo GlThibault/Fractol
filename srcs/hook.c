@@ -6,7 +6,7 @@
 /*   By: tglandai <tglandai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 20:00:26 by tglandai          #+#    #+#             */
-/*   Updated: 2018/10/06 10:44:32 by tglandai         ###   ########.fr       */
+/*   Updated: 2018/10/11 11:46:58 by tglandai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,9 @@ int		key_hook2(int keycode, t_fractol *data)
 	else if (keycode == 20)
 		data->color = 265;
 	else if (keycode == 35)
-	{
-		if (data->julia_mouse == 1)
-			data->julia_mouse = 0;
-		else
-			data->julia_mouse = 1;
-	}
+		data->julia_mouse = !data->julia_mouse;
+	else if (keycode == 34)
+		data->show_text = !data->show_text;
 	return (0);
 }
 
@@ -33,9 +30,9 @@ int		key_hook(int keycode, t_fractol *data)
 	if (keycode == 53)
 		exit(1);
 	else if (keycode == 69)
-		data->it_max++;
+		data->it_max += 50;
 	else if (keycode == 78)
-		data->it_max--;
+		data->it_max -= 50;
 	else if (keycode == 123)
 		data->x1 -= 30 / data->zoom;
 	else if (keycode == 124)

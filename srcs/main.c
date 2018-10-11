@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tglandai <tglandai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/08 15:59:26 by tglandai          #+#    #+#             */
-/*   Updated: 2016/12/14 15:46:05 by tglandai         ###   ########.fr       */
+/*   Updated: 2018/10/11 12:00:44 by tglandai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	fract_calc(t_fractol *data)
 		julia_pthread(data);
 	else if (data->fract == 2)
 		burningship_pthread(data);
-	put_text(data);
+	if (data->show_text)
+		put_text(data);
 }
 
 void	fract_init(t_fractol *data)

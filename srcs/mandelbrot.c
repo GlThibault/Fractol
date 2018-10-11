@@ -6,7 +6,7 @@
 /*   By: tglandai <tglandai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 13:42:53 by tglandai          #+#    #+#             */
-/*   Updated: 2018/09/19 14:02:28 by tglandai         ###   ########.fr       */
+/*   Updated: 2018/10/11 13:10:40 by tglandai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	mandelbrot_calc(t_fractol *data)
 void	*mandelbrot(void *tab)
 {
 	t_fractol	*data;
-	double		tmp;
+	int		tmp;
 
 	data = (t_fractol *)tab;
 	data->x = 0;
@@ -66,21 +66,19 @@ void	*mandelbrot(void *tab)
 
 void	mandelbrot_pthread(t_fractol *data)
 {
-	t_fractol	tab[8];
-	pthread_t	t[8];
+	t_fractol	tab[THREAD_NUMBER];
+	pthread_t	t[THREAD_NUMBER];
 	int			i;
 
 	i = 0;
-	while (i < 8)
+	while (i < THREAD_NUMBER)
 	{
 		ft_memcpy((void*)&tab[i], (void*)data, sizeof(t_fractol));
-		tab[i].y = 100 * i;
-		tab[i].y_max = 100 * (i + 1);
+		tab[i].y = THREAD_WIDTH * i;
+		tab[i].y_max = THREAD_WIDTH * (i + 1);
+		pthread_create(&t[i], NULL, mandelbrot, &tab[i]);
 		i++;
 	}
-	i = 0;
-	while (++i <= 8)
-		pthread_create(&t[i - 1], NULL, mandelbrot, &tab[i - 1]);
 	while (i--)
 		pthread_join(t[i], NULL);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
