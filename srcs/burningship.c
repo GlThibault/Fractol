@@ -6,7 +6,7 @@
 /*   By: tglandai <tglandai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/14 12:45:50 by tglandai          #+#    #+#             */
-/*   Updated: 2018/10/11 12:02:49 by tglandai         ###   ########.fr       */
+/*   Updated: 2018/10/13 16:27:46 by tglandai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	burningship_pthread(t_fractol *data)
 		ft_memcpy((void*)&tab[i], (void*)data, sizeof(t_fractol));
 		tab[i].y = THREAD_WIDTH * i;
 		tab[i].y_max = THREAD_WIDTH * (i + 1);
-		pthread_create(&t[i], NULL, julia, &tab[i]);
+		pthread_create(&t[i], NULL, burningship, &tab[i]);
 		i++;
 	}
 	while (i--)
